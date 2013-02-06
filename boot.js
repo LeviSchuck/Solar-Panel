@@ -12,10 +12,8 @@ var addTailFunc = function(filename,name){
 	tail.sockets = [];
 	tail.name = name;
 	tail.proc.stdout.on("data", function (data) {
-		console.log("Got data "+data);
-	    tail.sockets.forEach(function(socket){
-	    	socket.emit('tail', { text: data.toString('utf8'), name:name });
-	    });
+		//console.log("Got data "+data);
+	    io.sockets.emit('tail', { text: data.toString('utf8'), name:name });
 	});
 	console.log("Listening to "+filename);
 	tailed.push(tail);
@@ -36,10 +34,13 @@ io.sockets.on('connection', function (socket) {
 	var names = ""
 	tailed.forEach(function(tail){
 		names += tail.name + ",";
-		tail.sockets.push(socket);
 	});
 	if(names == "") names = "Nothing.";
 	socket.emit('tail', { text: "Listening to "+names +"\n"});
+	names = null;
+	socket.on('disconnect', function () {
+		console.log("Viewer disconnected");
+	});
 });
 
 server.listen(1997);
