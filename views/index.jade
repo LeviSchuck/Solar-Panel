@@ -1,0 +1,17 @@
+extend layout
+block content
+
+	h1 Tailed Outputs
+	.row
+		pre.span8.tail-outputs
+		.tail-sections.span4
+			ul
+				each tail in tailed
+					li= tail.name
+
+block javascript
+	script(type='text/javascript', src='/socket.io/socket.io.js')
+	script(type='text/javascript', src='front.js')
+
+block header
+	link(rel="stylesheet", type="text/css", href="front.css")

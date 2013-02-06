@@ -1,0 +1,20 @@
+--- orientdb.sh.orig	2013-01-23 20:52:25.000000000 +0000
++++ orientdb.sh	2013-01-23 20:57:05.672404582 +0000
+@@ -20,7 +20,7 @@
+ 	fi
+ 	echo "Starting OrientDB server daemon..."
+ 	cd "$ORIENTDB_DIR/bin"
+-	su -c "cd \"$ORIENTDB_DIR/bin\"; /usr/bin/nohup ./server.sh 1>../log/orientdb.log 2>../log/orientdb.err &" - $ORIENTDB_USER
++	su -c "nohup $ORIENTDB_DIR/run.sh" - $ORIENTDB_USER
+ }
+ 
+ stop() {
+@@ -32,7 +33,7 @@
+ 	fi
+ 	echo "Stopping OrientDB server daemon..."
+ 	cd "$ORIENTDB_DIR/bin"
+-	su -c "cd \"$ORIENTDB_DIR/bin\"; /usr/bin/nohup ./shutdown.sh 1>>../log/orientdb.log 2>>../log/orientdb.err &" - $ORIENTDB_USER
++	su -c "nohup $ORIENTDB_DIR/stop.sh" - $ORIENTDB_USER
+ }
+ 
+ status() {
